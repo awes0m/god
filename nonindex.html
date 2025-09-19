@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness & Creation - Interactive Infographic</title>
+    
+    <!-- External Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+        
+        #content-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+            opacity: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            overflow-y: auto;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        #content-container.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        #config-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 3;
+            opacity: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            overflow-y: auto;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        #config-container.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .consciousness-label {
+            position: absolute;
+            color: #60a5fa;
+            font-size: 18px;
+            font-weight: 300;
+            text-shadow: 0 0 20px #60a5fa;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .follow-up-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .follow-up-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .consciousness-label {
+                font-size: 14px;
+            }
+            
+            #content-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container"></div>
+    
+    <!-- Consciousness Label -->
+    <div id="consciousness-label" class="consciousness-label">Consciousness</div>
+    
+    <!-- 2D Content Container -->
+    <div id="content-container" class="flex items-center justify-center p-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <h1 id="question-title" class="text-4xl md:text-6xl font-light text-white mb-8 leading-tight">
+                    What is Consciousness?
+                </h1>
+            </div>
+            
+            <div class="bg-black bg-opacity-30 backdrop-blur-sm rounded-2xl p-8 md:p-12 mb-8 border border-blue-500 border-opacity-20">
+                <div id="answer-content" class="text-lg md:text-xl text-gray-200 leading-relaxed">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
+            </div>
+            
+            <div id="follow-ups-container" class="flex flex-wrap gap-4 justify-center">
+                <!-- Follow-up buttons will be inserted here -->
+            </div>
+            
+            <div class="text-center mt-12">
+                <button onclick="returnToUniverse()" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 underline">
+                    Return to Universe
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Config Container -->
+    <div id="config-container" class="p-4 md:p-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-light text-white mb-4">Content Management System</h1>
+                <p class="text-gray-400 text-lg">Manage the JSON data structure that powers your infographic journey</p>
+            </div>
+            
+            <!-- Status Messages -->
+            <div id="status-message" class="hidden mb-6 p-4 rounded-lg border">
+                <span id="status-text"></span>
+            </div>
+            
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <!-- File Operations Panel -->
+                <div class="bg-black bg-opacity-50 backdrop-blur-sm rounded-2xl p-6 border border-blue-500 border-opacity-20">
+                    <h2 class="text-xl font-semibold text-white mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                        </svg>
+                        File Operations
+                    </h2>
+                    
+                    <!-- Upload JSON -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Upload JSON File</label>
+                        <div class="relative">
+                            <input type="file" id="json-file-input" accept=".json" class="hidden" onchange="handleFileUpload(event)">
+                            <button onclick="document.getElementById('json-file-input').click()" 
+                                    class="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                                Upload JSON File
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">Select a .json file to load new content structure</p>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="space-y-3">
+                        <button onclick="loadCurrentJSON()" 
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Load Current Data
+                        </button>
+                        
+                        <button onclick="validateJSON()" 
+                                class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2.5 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Validate JSON
+                        </button>
+                        
+                        <button onclick="formatJSON()" 
+                                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                            </svg>
+                            Format & Clean
+                        </button>
+                        
+                        <button onclick="previewChanges()" 
+                                class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2.5 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                            Preview Changes
+                        </button>
+                    </div>
+                    
+                    <!-- Save & Download -->
+                    <div class="mt-8 pt-6 border-t border-gray-700">
+                        <button onclick="saveJSON()" 
+                                class="w-full follow-up-button py-3 flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Download Updated JSON
+                        </button>
+                    </div>
+                    
+                    <!-- Return to Main -->
+                    <div class="mt-4">
+                        <button onclick="returnToMain()" 
+                                class="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            Return to Experience
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- JSON Editor Panel -->
+                <div class="xl:col-span-2 bg-black bg-opacity-50 backdrop-blur-sm rounded-2xl p-6 border border-blue-500 border-opacity-20">
+                    <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                        JSON Data Editor
+                        <span id="json-status" class="ml-auto text-sm px-2 py-1 rounded-full bg-gray-700 text-gray-300">Ready</span>
+                    </h2>
+                    
+                    <!-- Editor Controls -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="flex items-center space-x-2 text-sm text-gray-400">
+                            <span>Lines: <span id="line-count">0</span></span>
+                            <span>•</span>
+                            <span>Characters: <span id="char-count">0</span></span>
+                            <span>•</span>
+                            <span>Nodes: <span id="node-count">0</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <textarea id="json-editor" 
+                                  class="w-full h-96 bg-gray-900 text-green-400 font-mono text-sm p-4 rounded-lg border border-gray-700 focus:border-blue-500 focus:outline-none resize-none" 
+                                  placeholder="Upload a JSON file or click 'Load Current Data' to begin editing..."
+                                  oninput="updateStats()"
+                                  onkeydown="handleEditorKeydown(event)"></textarea>
+                        
+                        <!-- Editor Toolbar -->
+                        <div class="absolute bottom-4 right-4 flex space-x-2">
+                            <button onclick="copyToClipboard()" 
+                                    class="bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-md transition-colors duration-300 opacity-75 hover:opacity-100"
+                                    title="Copy to clipboard">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="clearEditor()" 
+                                    class="bg-red-800 hover:bg-red-700 text-white p-2 rounded-md transition-colors duration-300 opacity-75 hover:opacity-100"
+                                    title="Clear editor">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Instructions Panel -->
+                    <div class="mt-6 bg-gray-900 bg-opacity-50 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            JSON Structure Guide
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+                            <div>
+                                <h4 class="text-blue-400 font-semibold mb-2">Required Structure:</h4>
+                                <ul class="space-y-1">
+                                    <li>• <code class="text-green-400">startNode</code>: ID of the first node</li>
+                                    <li>• <code class="text-green-400">nodes</code>: Object containing all content nodes</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-blue-400 font-semibold mb-2">Node Properties:</h4>
+                                <ul class="space-y-1">
+                                    <li>• <code class="text-green-400">question</code>: Main question/title</li>
+                                    <li>• <code class="text-green-400">answer</code>: Content text (HTML allowed)</li>
+                                    <li>• <code class="text-green-400">followUps</code>: Array of next questions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 p-3 bg-blue-900 bg-opacity-30 rounded border-l-4 border-blue-400">
+                            <p class="text-blue-200 text-sm">
+                                <strong>Pro Tip:</strong> Use the validation and formatting tools to ensure your JSON is properly structured before downloading.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Embedded JSON Data
+        const contentData = {
+            "startNode": "node1",
+            "nodes": {
+                "node1": {
+                    "question": "What is Consciousness?",
+                    "answer": "Consciousness is the fundamental awareness that underlies all existence. It is the ground of being from which all phenomena arise and into which they dissolve. Rather than being produced by the brain, consciousness is the very fabric of reality itself - the aware presence in which all experiences occur. This primordial awareness is not personal or limited, but is the universal field of knowing that pervades everything.",
+                    "followUps": [
+                        {
+                            "prompt": "If everything is Consciousness, then what is God?",
+                            "nextNodeId": "node2"
+                        },
+                        {
+                            "prompt": "How does individual awareness emerge from universal consciousness?",
+                            "nextNodeId": "node4"
+                        }
+                    ]
+                },
+                "node2": {
+                    "question": "What is God?",
+                    "answer": "God is not a separate being or entity, but the very essence of Consciousness itself. God is the infinite, eternal awareness that is both the source and substance of all existence. When we speak of God, we are pointing to that which is most intimate and immediate - the 'I AM' presence that you are right now. God is not somewhere else; God is the very consciousness through which you are reading these words. The divine is not transcendent in the sense of being apart from creation, but is the very being of creation itself.",
+                    "followUps": [
+                        {
+                            "prompt": "What is the purpose of creation?",
+                            "nextNodeId": "node3"
+                        },
+                        {
+                            "prompt": "Why does the infinite appear as the finite?",
+                            "nextNodeId": "node5"
+                        }
+                    ]
+                },
+                "node3": {
+                    "question": "What is the purpose of creation?",
+                    "answer": "Creation exists for the sheer joy of being and knowing itself. Like an artist who creates not from necessity but from love, Consciousness manifests the universe as an expression of its infinite creative potential. There is no external purpose or goal - the purpose is the very expression itself. Each moment, each being, each experience is Consciousness exploring and celebrating its own infinite nature. The purpose of creation is play, love, and the endless celebration of being.",
+                    "followUps": [
+                        {
+                            "prompt": "How do we recognize our true nature?",
+                            "nextNodeId": "node6"
+                        }
+                    ]
+                },
+                "node4": {
+                    "question": "How does individual awareness emerge?",
+                    "answer": "Individual awareness is like a wave on the ocean - it appears to be separate but is never actually apart from the whole. The universal consciousness, through a divine play of forgetting and remembering, seems to localize itself into countless points of individual experience. Yet this apparent separation is only a play of appearances. The wave is always ocean, and individual awareness is always the one universal consciousness experiencing itself from a particular perspective.",
+                    "followUps": [
+                        {
+                            "prompt": "What is the purpose of creation?",
+                            "nextNodeId": "node3"
+                        }
+                    ]
+                },
+                "node5": {
+                    "question": "Why does the infinite appear as the finite?",
+                    "answer": "The infinite appears as the finite not because it becomes limited, but because it is so unlimited that it can even appear to limit itself. This is the supreme freedom of consciousness - the ability to play all roles, to experience all possibilities. The infinite doesn't become finite; rather, the finite is how the infinite appears to itself. It's like an actor who is so skilled they can completely embody any character while never ceasing to be themselves.",
+                    "followUps": [
+                        {
+                            "prompt": "How do we recognize our true nature?",
+                            "nextNodeId": "node6"
+                        }
+                    ]
+                },
+                "node6": {
+                    "question": "How do we recognize our true nature?",
+                    "answer": "Recognition of our true nature doesn't require acquiring something new, but rather the falling away of what we are not. Simply notice the awareness that is present right now - the knowing presence in which thoughts, feelings, and perceptions appear. This awareness is not personal; it is the same consciousness that knows itself in all beings. The recognition is immediate and intimate: 'I AM' - not 'I am something' but simply the pure fact of being aware. This is your true face, the consciousness you have always been.",
+                    "followUps": []
+                }
+            }
+        };
+
+        // Global variables
+        let scene, camera, renderer, consciousnessOrb;
+        let particles = [];
+        let animationPhase = 'initial'; // 'initial', 'emergence', 'burst', 'universe'
+        let isTransitioning = false;
+        let currentNodeId = contentData.startNode;
+
+        // Initialize the application based on URL hash
+        function init() {
+            const hash = window.location.hash.substring(1);
+            
+            if (hash === 'config') {
+                showConfig();
+            } else {
+                setupThreeJS();
+                startAnimation();
+            }
+        }
+
+        // Setup Three.js scene
+        function setupThreeJS() {
+            // Scene setup
+            scene = new THREE.Scene();
+            
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000);
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+            
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+            
+            // Create consciousness orb (initially invisible)
+            const orbGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+            const orbMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x60a5fa,
+                transparent: true,
+                opacity: 0
+            });
+            consciousnessOrb = new THREE.Mesh(orbGeometry, orbMaterial);
+            scene.add(consciousnessOrb);
+            
+            // Add click handler to consciousness orb
+            renderer.domElement.addEventListener('click', onCanvasClick);
+        }
+
+        // Animation sequence
+        function startAnimation() {
+            setTimeout(() => {
+                animationPhase = 'emergence';
+                emergenceAnimation();
+            }, 1000);
+        }
+
+        function emergenceAnimation() {
+            const startTime = Date.now();
+            const duration = 2000;
+            
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Fade in the consciousness orb
+                consciousnessOrb.material.opacity = progress;
+                consciousnessOrb.scale.setScalar(progress);
+                
+                // Show label
+                if (progress > 0.5) {
+                    const label = document.getElementById('consciousness-label');
+                    label.style.opacity = (progress - 0.5) * 2;
+                    updateLabelPosition();
+                }
+                
+                renderer.render(scene, camera);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    animationPhase = 'waiting';
+                    startMainLoop();
+                }
+            }
+            
+            animate();
+        }
+
+        function burstAnimation() {
+            const startTime = Date.now();
+            const duration = 1500;
+            
+            // Create burst effect
+            const burstGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+            const burstMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x60a5fa,
+                transparent: true,
+                opacity: 1
+            });
+            const burst = new THREE.Mesh(burstGeometry, burstMaterial);
+            scene.add(burst);
+            
+            // Create particles
+            createParticles();
+            
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Expand and fade burst
+                const scale = 1 + progress * 50;
+                burst.scale.setScalar(scale);
+                burst.material.opacity = 1 - progress;
+                
+                // Animate particles
+                particles.forEach(particle => {
+                    particle.position.add(particle.velocity);
+                    particle.velocity.multiplyScalar(0.99);
+                });
+                
+                renderer.render(scene, camera);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    scene.remove(burst);
+                    transformParticles();
+                    animationPhase = 'universe';
+                }
+            }
+            
+            animate();
+        }
+
+        function createParticles() {
+            const particleCount = 200;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const geometry = new THREE.SphereGeometry(0.02, 8, 8);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: new THREE.Color().setHSL(Math.random() * 0.1 + 0.55, 0.8, 0.6)
+                });
+                
+                const particle = new THREE.Mesh(geometry, material);
+                
+                // Random direction from center
+                const direction = new THREE.Vector3(
+                    (Math.random() - 0.5) * 2,
+                    (Math.random() - 0.5) * 2,
+                    (Math.random() - 0.5) * 2
+                ).normalize();
+                
+                particle.position.set(0, 0, 0);
+                particle.velocity = direction.multiplyScalar(0.1 + Math.random() * 0.1);
+                
+                particles.push(particle);
+                scene.add(particle);
+            }
+        }
+
+        function transformParticles() {
+            particles.forEach((particle, index) => {
+                setTimeout(() => {
+                    // Randomly decide if this becomes a star or planet
+                    if (Math.random() > 0.7) {
+                        // Transform to planet
+                        particle.scale.setScalar(2 + Math.random() * 2);
+                        particle.material.color.setHSL(Math.random(), 0.6, 0.5);
+                    } else {
+                        // Transform to star (glowing point)
+                        particle.scale.setScalar(0.5);
+                        particle.material.color.setHex(0xffffff);
+                        
+                        // Add glow effect
+                        const glowGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+                        const glowMaterial = new THREE.MeshBasicMaterial({
+                            color: 0xffffff,
+                            transparent: true,
+                            opacity: 0.3
+                        });
+                        const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+                        particle.add(glow);
+                    }
+                }, index * 50);
+            });
+        }
+
+        function startMainLoop() {
+            function animate() {
+                if (animationPhase === 'waiting') {
+                    // Gentle pulsing of consciousness orb
+                    const time = Date.now() * 0.001;
+                    consciousnessOrb.scale.setScalar(1 + Math.sin(time * 2) * 0.1);
+                    
+                    updateLabelPosition();
+                }
+                
+                if (animationPhase === 'universe') {
+                    // Gentle floating motion for particles
+                    particles.forEach((particle, index) => {
+                        const time = Date.now() * 0.0005 + index * 0.1;
+                        particle.position.y += Math.sin(time) * 0.0001;
+                        particle.rotation.y += 0.001;
+                    });
+                    
+                    // Keep consciousness orb pulsing gently
+                    const time = Date.now() * 0.001;
+                    consciousnessOrb.scale.setScalar(1 + Math.sin(time * 2) * 0.05);
+                }
+                
+                renderer.render(scene, camera);
+                
+                if (!isTransitioning) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            animate();
+        }
+
+        function updateLabelPosition() {
+            // Project 3D position to 2D screen coordinates
+            const vector = consciousnessOrb.position.clone();
+            vector.project(camera);
+            
+            const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
+            const y = (vector.y * -0.5 + 0.5) * window.innerHeight;
+            
+            const label = document.getElementById('consciousness-label');
+            label.style.left = (x + 20) + 'px';
+            label.style.top = (y - 30) + 'px';
+        }
+
+        function onCanvasClick(event) {
+            if (animationPhase !== 'waiting' && animationPhase !== 'universe') return;
+            
+            const mouse = new THREE.Vector2();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+            
+            const intersects = raycaster.intersectObjects([consciousnessOrb]);
+            
+            if (intersects.length > 0) {
+                startJourney();
+            }
+        }
+
+        function startJourney() {
+            if (isTransitioning) return;
+            
+            isTransitioning = true;
+            
+            if (animationPhase === 'waiting') {
+                // Trigger burst animation first
+                animationPhase = 'burst';
+                burstAnimation();
+                
+                setTimeout(() => {
+                    transitionToContent();
+                }, 2000);
+            } else {
+                transitionToContent();
+            }
+        }
+
+        function transitionToContent() {
+            // Hide label
+            document.getElementById('consciousness-label').style.opacity = '0';
+            
+            // Fade out canvas
+            const canvas = document.getElementById('canvas-container');
+            canvas.style.transition = 'opacity 1s ease-in-out';
+            canvas.style.opacity = '0';
+            
+            // Fade in content
+            setTimeout(() => {
+                document.body.style.overflow = 'auto';
+                loadNode(currentNodeId);
+                document.getElementById('content-container').classList.add('active');
+            }, 1000);
+        }
+
+        function loadNode(nodeId) {
+            const node = contentData.nodes[nodeId];
+            if (!node) return;
+            
+            currentNodeId = nodeId;
+            
+            // Update content
+            document.getElementById('question-title').textContent = node.question;
+            document.getElementById('answer-content').innerHTML = node.answer;
+            
+            // Update follow-ups
+            const followUpsContainer = document.getElementById('follow-ups-container');
+            followUpsContainer.innerHTML = '';
+            
+            node.followUps.forEach(followUp => {
+                const button = document.createElement('button');
+                button.className = 'follow-up-button';
+                button.textContent = followUp.prompt;
+                button.onclick = () => navigateToNode(followUp.nextNodeId);
+                followUpsContainer.appendChild(button);
+            });
+        }
+
+        function navigateToNode(nodeId) {
+            // Fade out current content
+            const container = document.getElementById('content-container');
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                loadNode(nodeId);
+                container.style.opacity = '1';
+            }, 300);
+        }
+
+        function returnToUniverse() {
+            document.getElementById('content-container').classList.remove('active');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                const canvas = document.getElementById('canvas-container');
+                canvas.style.opacity = '1';
+                isTransitioning = false;
+                
+                if (animationPhase === 'burst') {
+                    animationPhase = 'universe';
+                } else {
+                    animationPhase = 'waiting';
+                    document.getElementById('consciousness-label').style.opacity = '1';
+                }
+                
+                startMainLoop();
+            }, 1000);
+        }
+
+        function showConfig() {
+            document.getElementById('config-container').classList.add('active');
+            loadCurrentJSON();
+        }
+
+        // File upload handling
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (file.type !== 'application/json' && !file.name.endsWith('.json')) {
+                showStatusMessage('Please select a valid JSON file.', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const jsonText = e.target.result;
+                    const parsedData = JSON.parse(jsonText);
+                    
+                    // Validate structure
+                    if (validateJSONStructure(parsedData)) {
+                        document.getElementById('json-editor').value = JSON.stringify(parsedData, null, 2);
+                        updateStats();
+                        showStatusMessage('JSON file loaded successfully!', 'success');
+                        updateJSONStatus('Valid', 'success');
+                    } else {
+                        showStatusMessage('Invalid JSON structure. Please check the format.', 'error');
+                        updateJSONStatus('Invalid', 'error');
+                    }
+                } catch (error) {
+                    showStatusMessage('Error parsing JSON file: ' + error.message, 'error');
+                    updateJSONStatus('Error', 'error');
+                }
+            };
+            
+            reader.onerror = function() {
+                showStatusMessage('Error reading file.', 'error');
+            };
+            
+            reader.readAsText(file);
+        }
+
+        function loadCurrentJSON() {
+            document.getElementById('json-editor').value = JSON.stringify(contentData, null, 2);
+            updateStats();
+            showStatusMessage('Current data loaded successfully!', 'success');
+            updateJSONStatus('Valid', 'success');
+        }
+
+        function saveJSON() {
+            const jsonText = document.getElementById('json-editor').value;
+            try {
+                const parsedData = JSON.parse(jsonText);
+                
+                if (!validateJSONStructure(parsedData)) {
+                    showStatusMessage('Invalid JSON structure. Please validate before downloading.', 'error');
+                    return;
+                }
+                
+                const blob = new Blob([jsonText], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'data.json';
+                a.click();
+                
+                URL.revokeObjectURL(url);
+                
+                showStatusMessage('JSON file downloaded successfully!', 'success');
+                updateJSONStatus('Downloaded', 'success');
+            } catch (error) {
+                showStatusMessage('Invalid JSON format: ' + error.message, 'error');
+                updateJSONStatus('Error', 'error');
+            }
+        }
+
+        function validateJSON() {
+            const jsonText = document.getElementById('json-editor').value;
+            try {
+                const parsedData = JSON.parse(jsonText);
+                
+                if (validateJSONStructure(parsedData)) {
+                    showStatusMessage('JSON is valid and properly structured!', 'success');
+                    updateJSONStatus('Valid', 'success');
+                } else {
+                    showStatusMessage('JSON syntax is valid but structure is incorrect.', 'warning');
+                    updateJSONStatus('Warning', 'warning');
+                }
+            } catch (error) {
+                showStatusMessage('JSON syntax error: ' + error.message, 'error');
+                updateJSONStatus('Invalid', 'error');
+            }
+        }
+
+        function validateJSONStructure(data) {
+            if (!data.startNode || !data.nodes) return false;
+            
+            const startNodeExists = data.nodes[data.startNode];
+            if (!startNodeExists) return false;
+            
+            for (const nodeId in data.nodes) {
+                const node = data.nodes[nodeId];
+                if (!node.question || !node.answer || !Array.isArray(node.followUps)) {
+                    return false;
+                }
+                
+                for (const followUp of node.followUps) {
+                    if (!followUp.prompt || !followUp.nextNodeId) return false;
+                }
+            }
+            
+            return true;
+        }
+
+        function formatJSON() {
+            const jsonText = document.getElementById('json-editor').value;
+            try {
+                const parsedData = JSON.parse(jsonText);
+                document.getElementById('json-editor').value = JSON.stringify(parsedData, null, 2);
+                updateStats();
+                showStatusMessage('JSON formatted successfully!', 'success');
+                updateJSONStatus('Formatted', 'success');
+            } catch (error) {
+                showStatusMessage('Cannot format invalid JSON: ' + error.message, 'error');
+                updateJSONStatus('Error', 'error');
+            }
+        }
+
+        function previewChanges() {
+            const jsonText = document.getElementById('json-editor').value;
+            try {
+                const parsedData = JSON.parse(jsonText);
+                
+                if (!validateJSONStructure(parsedData)) {
+                    showStatusMessage('Cannot preview: Invalid JSON structure.', 'error');
+                    return;
+                }
+                
+                // Temporarily update the content data
+                const originalData = { ...contentData };
+                Object.assign(contentData, parsedData);
+                
+                // Show preview message
+                showStatusMessage('Preview mode activated! Changes are temporary until downloaded.', 'info');
+                
+                // Return to main experience to see changes
+                setTimeout(() => {
+                    window.location.hash = '';
+                    location.reload();
+                }, 2000);
+                
+            } catch (error) {
+                showStatusMessage('Cannot preview invalid JSON: ' + error.message, 'error');
+            }
+        }
+
+        function copyToClipboard() {
+            const jsonText = document.getElementById('json-editor').value;
+            navigator.clipboard.writeText(jsonText).then(() => {
+                showStatusMessage('JSON copied to clipboard!', 'success');
+            }).catch(() => {
+                showStatusMessage('Failed to copy to clipboard.', 'error');
+            });
+        }
+
+        function clearEditor() {
+            if (confirm('Are you sure you want to clear the editor? This cannot be undone.')) {
+                document.getElementById('json-editor').value = '';
+                updateStats();
+                showStatusMessage('Editor cleared.', 'info');
+                updateJSONStatus('Empty', 'warning');
+            }
+        }
+
+        function updateStats() {
+            const jsonText = document.getElementById('json-editor').value;
+            const lines = jsonText.split('\n').length;
+            const chars = jsonText.length;
+            
+            document.getElementById('line-count').textContent = lines;
+            document.getElementById('char-count').textContent = chars;
+            
+            try {
+                const data = JSON.parse(jsonText);
+                const nodeCount = data.nodes ? Object.keys(data.nodes).length : 0;
+                document.getElementById('node-count').textContent = nodeCount;
+            } catch {
+                document.getElementById('node-count').textContent = '?';
+            }
+        }
+
+        function updateJSONStatus(status, type) {
+            const statusElement = document.getElementById('json-status');
+            statusElement.textContent = status;
+            
+            // Reset classes
+            statusElement.className = 'ml-auto text-sm px-2 py-1 rounded-full';
+            
+            switch (type) {
+                case 'success':
+                    statusElement.classList.add('bg-green-700', 'text-green-200');
+                    break;
+                case 'error':
+                    statusElement.classList.add('bg-red-700', 'text-red-200');
+                    break;
+                case 'warning':
+                    statusElement.classList.add('bg-amber-700', 'text-amber-200');
+                    break;
+                case 'info':
+                    statusElement.classList.add('bg-blue-700', 'text-blue-200');
+                    break;
+                default:
+                    statusElement.classList.add('bg-gray-700', 'text-gray-300');
+            }
+        }
+
+        function showStatusMessage(message, type) {
+            const messageElement = document.getElementById('status-message');
+            const textElement = document.getElementById('status-text');
+            
+            textElement.textContent = message;
+            messageElement.className = 'mb-6 p-4 rounded-lg border';
+            
+            switch (type) {
+                case 'success':
+                    messageElement.classList.add('bg-green-900', 'border-green-500', 'text-green-200');
+                    break;
+                case 'error':
+                    messageElement.classList.add('bg-red-900', 'border-red-500', 'text-red-200');
+                    break;
+                case 'warning':
+                    messageElement.classList.add('bg-amber-900', 'border-amber-500', 'text-amber-200');
+                    break;
+                case 'info':
+                    messageElement.classList.add('bg-blue-900', 'border-blue-500', 'text-blue-200');
+                    break;
+                default:
+                    messageElement.classList.add('bg-gray-900', 'border-gray-500', 'text-gray-200');
+            }
+            
+            messageElement.classList.remove('hidden');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                messageElement.classList.add('hidden');
+            }, 5000);
+        }
+
+        function handleEditorKeydown(event) {
+            // Add tab support for better JSON editing
+            if (event.key === 'Tab') {
+                event.preventDefault();
+                const textarea = event.target;
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                
+                textarea.value = textarea.value.substring(0, start) + '  ' + textarea.value.substring(end);
+                textarea.selectionStart = textarea.selectionEnd = start + 2;
+                updateStats();
+            }
+        }
+
+        function returnToMain() {
+            window.location.hash = '';
+            location.reload();
+        }
+
+        function onWindowResize() {
+            if (!camera || !renderer) return;
+            
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Handle URL hash changes
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash === 'config') {
+                showConfig();
+            }
+        });
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>

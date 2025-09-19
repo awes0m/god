@@ -1,0 +1,238 @@
+{
+  "startNode": "node1",
+  "nodes": {
+    "node1": {
+      "question": "What is Consciousness?",
+      "answer": "Consciousness is the fundamental awareness that underlies all existence. It is the ground of being from which all phenomena arise and into which they dissolve. Rather than being produced by the brain, consciousness is the very fabric of reality itself - the aware presence in which all experiences occur. This primordial awareness is not personal or limited, but is the universal field of knowing that pervades everything.",
+      "followUps": [
+        {
+          "prompt": "If everything is Consciousness, then what is God?",
+          "nextNodeId": "node2"
+        },
+        {
+          "prompt": "How does individual awareness emerge from universal consciousness?",
+          "nextNodeId": "node4"
+        },
+        {
+          "prompt": "How does the Bhagavad Gita describe the nature of the Self, or Spirit?",
+          "nextNodeId": "gita_node1"
+        }
+      ]
+    },
+    "node2": {
+      "question": "What is God?",
+      "answer": "God is not a separate being or entity, but the very essence of Consciousness itself. God is the infinite, eternal awareness that is both the source and substance of all existence. When we speak of God, we are pointing to that which is most intimate and immediate - the 'I AM' presence that you are right now. God is not somewhere else; God is the very consciousness through which you are reading these words. The divine is not transcendent in the sense of being apart from creation, but is the very being of creation itself.",
+      "followUps": [
+        {
+          "prompt": "What is the purpose of creation?",
+          "nextNodeId": "node3"
+        },
+        {
+          "prompt": "Why does the infinite appear as the finite?",
+          "nextNodeId": "node5"
+        }
+      ]
+    },
+    "node3": {
+      "question": "What is the purpose of creation?",
+      "answer": "Creation exists for the sheer joy of being and knowing itself. Like an artist who creates not from necessity but from love, Consciousness manifests the universe as an expression of its infinite creative potential. There is no external purpose or goal - the purpose is the very expression itself. Each moment, each being, each experience is Consciousness exploring and celebrating its own infinite nature. The purpose of creation is play, love, and the endless celebration of being.",
+      "followUps": [
+        {
+          "prompt": "How do we recognize our true nature?",
+          "nextNodeId": "node6"
+        }
+      ]
+    },
+    "node4": {
+      "question": "How does individual awareness emerge?",
+      "answer": "Individual awareness is like a wave on the ocean - it appears to be separate but is never actually apart from the whole. The universal consciousness, through a divine play of forgetting and remembering, seems to localize itself into countless points of individual experience. Yet this apparent separation is only a play of appearances. The wave is always ocean, and individual awareness is always the one universal consciousness experiencing itself from a particular perspective.",
+      "followUps": [
+        {
+          "prompt": "What is the purpose of creation?",
+          "nextNodeId": "node3"
+        }
+      ]
+    },
+    "node5": {
+      "question": "Why does the infinite appear as the finite?",
+      "answer": "The infinite appears as the finite not because it becomes limited, but because it is so unlimited that it can even appear to limit itself. This is the supreme freedom of consciousness - the ability to play all roles, to experience all possibilities. The infinite doesn't become finite; rather, the finite is how the infinite appears to itself. It's like an actor who is so skilled they can completely embody any character while never ceasing to be themselves.",
+      "followUps": [
+        {
+          "prompt": "How do we recognize our true nature?",
+          "nextNodeId": "node6"
+        }
+      ]
+    },
+    "node6": {
+      "question": "How do we recognize our true nature?",
+      "answer": "Recognition of our true nature doesn't require acquiring something new, but rather the falling away of what we are not. Simply notice the awareness that is present right now - the knowing presence in which thoughts, feelings, and perceptions appear. This awareness is not personal; it is the same consciousness that knows itself in all beings. The recognition is immediate and intimate: 'I AM' - not 'I am something' but simply the pure fact of being aware. This is your true face, the consciousness you have always been.",
+      "followUps": [
+        {
+          "prompt": "What does the Bhagavad Gita say about recognizing our true nature?",
+          "nextNodeId": "gita_node10"
+        }
+      ]
+    },
+    "gita_node1": {
+      "question": "What is the nature of the Self (Spirit) according to the Bhagavad Gita?",
+      "answer": "The Bhagavad Gita teaches that the Spirit (Self) is eternal, indestructible, and unborn[cite: 157, 158]. [cite_start]It does not die when the body is destroyed[cite: 159]. [cite_start]Just as a person discards old clothes for new ones, the soul acquires a new body after death[cite: 163, 164]. [cite_start]The Spirit cannot be cut, burned, wetted, or dried; it is all-pervading, unchanging, and primeval[cite: 165, 166]. [cite_start]The wise do not grieve for the living or the dead, knowing that the physical body is transitory, but the invisible Spirit is eternal[cite: 143, 144, 152].",
+      "followUps": [
+        {
+          "prompt": "If the Spirit is eternal, what is the path of selfless action (Karma-yoga)?",
+          "nextNodeId": "gita_node2"
+        },
+        {
+          "prompt": "What are the characteristics of a self-realized person?",
+          "nextNodeId": "gita_node3"
+        }
+      ]
+    },
+    "gita_node2": {
+      "question": "What is Karma-yoga, the path of selfless action?",
+      "answer": "Karma-yoga is the path of performing one's duty without attachment to the results[cite: 235]. [cite_start]You have control over your actions only, not the fruits of those actions[cite: 228]. [cite_start]By abandoning attachment to the results and remaining calm in both success and failure, one can free oneself from the bondage of Karma[cite: 230, 212]. [cite_start]This selfless service is a spiritual discipline that protects one from the fear of birth and death[cite: 214]. [cite_start]The wise work for the welfare of society without selfish motives[cite: 305].",
+      "followUps": [
+        {
+          "prompt": "Why is it important to control the senses on this path?",
+          "nextNodeId": "gita_node4"
+        },
+        {
+          "prompt": "What are the different paths to God mentioned in the Gita?",
+          "nextNodeId": "gita_node11"
+        }
+      ]
+    },
+    "gita_node3": {
+      "question": "What are the marks of a self-realized person?",
+      "answer": "A self-realized or enlightened person is completely free from all desires of the mind and is satisfied in the Self by the joy of the Self[cite: 242, 243]. [cite_start]Their mind is unperturbed by sorrow, they do not crave pleasure, and are free from attachment, fear, and anger[cite: 244]. [cite_start]Such a person can withdraw their senses from sense objects, just as a tortoise withdraws its limbs into its shell[cite: 246]. [cite_start]They look upon a learned priest, an outcast, a cow, an elephant, or a dog with an equal eye, seeing the Lord in all[cite: 424].",
+      "followUps": [
+        {
+          "prompt": "What are the dangers of unrestrained senses?",
+          "nextNodeId": "gita_node4"
+        }
+      ]
+    },
+    "gita_node4": {
+      "question": "What does the Gita say about the dangers of unrestrained senses?",
+      "answer": "The Gita warns that the restless senses can forcibly carry away the mind, even of a wise person striving for perfection[cite: 249]. [cite_start]Thinking about sense objects leads to attachment; from attachment comes desire, and from unfulfilled desire arises anger[cite: 251, 252, 253]. [cite_start]Anger leads to delusion, which bewilders the mind and destroys reasoning, causing one to fall from the right path[cite: 254, 255, 256]. [cite_start]Therefore, one must bring the senses under control to achieve a steady intellect and find peace[cite: 250, 257].",
+      "followUps": [
+        {
+          "prompt": "How does lust originate and how can it be controlled?",
+          "nextNodeId": "gita_node5"
+        }
+      ]
+    },
+    "gita_node5": {
+      "question": "What is the origin of sin and how can lust be controlled?",
+      "answer": "Lord Krishna explains that lust, born out of passion, is the origin of sin[cite: 321]. [cite_start]When unfulfilled, this lust turns into anger[cite: 321]. [cite_start]It is an insatiable enemy that covers Self-knowledge, just as smoke covers fire[cite: 322, 323]. [cite_start]The senses, mind, and intellect are the seats of lust[cite: 325]. [cite_start]To control it, one must first control the senses[cite: 327]. [cite_start]Knowing that the Spirit is superior to the intellect, one should control the mind with the purified intellect to conquer this powerful enemy[cite: 329, 330, 331].",
+      "followUps": [
+        {
+          "prompt": "Why does God incarnate on Earth?",
+          "nextNodeId": "gita_node6"
+        }
+      ]
+    },
+    "gita_node6": {
+      "question": "What is the purpose of God's incarnation on Earth?",
+      "answer": "The Supreme Lord incarnates on Earth whenever there is a decline of righteousness (Dharma) and a rise of unrighteousness (Adharma)[cite: 342]. [cite_start]He appears from time to time to protect the good, transform the wicked, and re-establish the world order (Dharma)[cite: 343]. [cite_start]Those who truly understand the divine nature of His birth and activities are not born again after leaving the body and attain His supreme abode[cite: 344].",
+      "followUps": [
+        {
+          "prompt": "How does the Gita describe God's manifestations?",
+          "nextNodeId": "gita_node7"
+        }
+      ]
+    },
+    "gita_node7": {
+      "question": "How is God the source of everything?",
+      "answer": "Lord Krishna reveals that He is the origin of all creation; everything emanates from Him[cite: 651, 653]. [cite_start]He is the sapidity in water, the radiance in the sun and moon, the sacred syllable OM in the Vedas, and the life in all beings[cite: 512, 513]. [cite_start]The entire universe is strung on Him like jewels on a thread[cite: 511]. [cite_start]Everything that is glorious, brilliant, and powerful is a manifestation of a small fraction of His splendor[cite: 699]. [cite_start]He supports the entire universe with a small part of His divine power[cite: 700, 701].",
+      "followUps": [
+        {
+          "prompt": "How does one perceive God's Universal Form?",
+          "nextNodeId": "gita_node8"
+        }
+      ]
+    },
+    "gita_node8": {
+      "question": "What is the vision of the Universal Form?",
+      "answer": "At Arjuna's request, Lord Krishna reveals His divine, majestic, and cosmic form[cite: 712]. [cite_start]Arjuna sees the entire universe with its many divisions all in one, within the body of the Lord[cite: 715]. [cite_start]This form has endless arms, stomachs, mouths, and eyes, with the brilliance of a thousand suns[cite: 713, 714, 719]. [cite_start]Seeing this marvelous and terrifying form, Arjuna is filled with wonder and fear[cite: 716, 733]. [cite_start]Krishna explains that this form cannot be seen by study of the Vedas, by sacrifice, or by charity, but only through single-minded devotion[cite: 782, 783, 792].",
+      "followUps": [
+        {
+          "prompt": "Which path of worship is better: personal or impersonal?",
+          "nextNodeId": "gita_node9"
+        }
+      ]
+    },
+    "gita_node9": {
+      "question": "Is it better to worship a personal God or an impersonal Absolute?",
+      "answer": "The Gita addresses both paths. [cite_start]Lord Krishna considers the best yogis to be those ever-steadfast devotees who worship His personal form with supreme faith[cite: 796]. [cite_start]However, those who worship the unmanifest, omnipresent, and unchanging Eternal Being also attain Him[cite: 797, 798]. [cite_start]Krishna states that the path of worshipping the impersonal is more difficult for embodied beings[cite: 799]. [cite_start]For those who offer all actions to His personal form and meditate on Him, He swiftly becomes their savior from the ocean of death and transmigration[cite: 800, 802].",
+      "followUps": [
+        {
+          "prompt": "What are the divine and demonic qualities in humans?",
+          "nextNodeId": "gita_node12"
+        },
+        {
+          "prompt": "How does one attain liberation?",
+          "nextNodeId": "gita_node10"
+        }
+      ]
+    },
+    "gita_node10": {
+      "question": "How does one attain liberation (Nirvana or Mukti)?",
+      "answer": "Liberation is attained by rising above the three modes of material nature (goodness, passion, ignorance)[cite: 900]. [cite_start]This is achieved by offering service to the Lord with unswerving devotion[cite: 911]. [cite_start]One must cut the tree of attachment and desire with the mighty axe of Self-knowledge and detachment[cite: 918, 919]. [cite_start]By surrendering to God's will, performing one's duty without attachment, and fixing the mind on Him as the supreme goal, one is liberated from all sins and the bondage of Karma and merges with the Supreme[cite: 1133, 1134].",
+      "followUps": [
+        {
+          "prompt": "What are the three modes of material nature?",
+          "nextNodeId": "gita_node13"
+        },
+        {
+          "prompt": "What is the ultimate path to God?",
+          "nextNodeId": "gita_node14"
+        }
+      ]
+    },
+    "gita_node11": {
+      "question": "What are the different paths to God described in the Gita?",
+      "answer": "The Bhagavad Gita outlines four main paths to God[cite: 803, 804, 805, 807]. [cite_start]1) The path of knowledge (Jnana-yoga) for the contemplative[cite: 273]. [cite_start]2) The path of selfless action (Karma-yoga) for others[cite: 273]. [cite_start]3) The path of devotion (Bhakti-yoga), for those who worship a personal God[cite: 794, 795, 796]. [cite_start]4) The path of meditation (Dhyana-yoga), which involves controlling the mind and senses to contemplate the Supreme Being[cite: 451, 453]. [cite_start]The Gita teaches that both the path of Self-knowledge and selfless service lead to the supreme goal[cite: 401].",
+      "followUps": [
+        {
+          "prompt": "What are the attributes of a true devotee?",
+          "nextNodeId": "gita_node15"
+        }
+      ]
+    },
+    "gita_node12": {
+      "question": "What are the divine and demonic qualities in human beings?",
+      "answer": "The Gita lists divine and demonic qualities[cite: 953, 959]. [cite_start]Divine qualities, which lead to salvation, include fearlessness, purity, nonviolence, truthfulness, absence of anger, compassion, and gentleness[cite: 954, 955, 957]. [cite_start]Demonic qualities, which lead to bondage, include hypocrisy, arrogance, pride, anger, harshness, and ignorance[cite: 956, 957]. [cite_start]Those with demonic natures do not know what is right, lack purity and truthfulness, and believe the world is unreal and without a God[cite: 961, 962]. [cite_start]Lust, anger, and greed are described as the three gates to hell[cite: 980, 981].",
+      "followUps": [
+        {
+          "prompt": "How do these qualities relate to the three modes of nature?",
+          "nextNodeId": "gita_node13"
+        }
+      ]
+    },
+    "gita_node13": {
+      "question": "What are the three modes (Gunas) of material nature?",
+      "answer": "The three modes are Sattva (goodness, purity), Rajas (passion, activity), and Tamas (ignorance, inertia)[cite: 875, 876]. [cite_start]These modes bind the eternal soul to the physical body[cite: 876]. [cite_start]Sattva binds through attachment to happiness and knowledge[cite: 878]; [cite_start]Rajas binds through intense craving and attachment to the fruits of work [cite: 879, 880][cite_start]; and Tamas binds through carelessness, laziness, and sleep[cite: 882]. [cite_start]All beings and actions in the material world are influenced by a combination of these three modes[cite: 1070]. [cite_start]One must transcend all three to attain salvation[cite: 900].",
+      "followUps": [
+        {
+          "prompt": "How can one transcend these modes?",
+          "nextNodeId": "gita_node10"
+        }
+      ]
+    },
+    "gita_node14": {
+      "question": "What is the ultimate path to God according to the Gita?",
+      "answer": "The ultimate and most secret teaching of the Gita is the path of surrender[cite: 1129]. [cite_start]Lord Krishna advises Arjuna to set aside all notions of doership and attachment to the fruits of all works and just surrender to His Will[cite: 1133]. [cite_start]He says, 'Fix your mind on Me, be devoted to Me, offer service to Me, bow down to Me, and you shall certainly reach Me.' [cite: 1131] [cite_start]By taking complete refuge in Him, He promises to liberate the devotee from all sins and the bondage of Karma[cite: 1134].",
+      "followUps": [
+        {
+          "prompt": "What are the attributes of a devotee who is dear to God?",
+          "nextNodeId": "gita_node15"
+        }
+      ]
+    },
+    "gita_node15": {
+      "question": "What are the attributes of a devotee who is dear to God?",
+      "answer": "A devotee dear to the Lord does not hate any creature, is friendly and compassionate, free from ego, and even-minded in pain and pleasure[cite: 810]. [cite_start]They are ever content, with a subdued mind and firm resolve, and their intellect is engaged in dwelling upon the Lord[cite: 811]. [cite_start]They are not agitated by the world, nor do they agitate it, and they are free from joy, envy, fear, and anxiety[cite: 812]. [cite_start]Such a person has renounced both good and evil and is full of devotion[cite: 815].",
+      "followUps": []
+    }
+  }
+}
