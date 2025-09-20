@@ -98,6 +98,38 @@
             box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
         }
         
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .media-container {
+            border-top: 1px solid rgba(75, 85, 99, 0.3);
+            padding-top: 2rem;
+        }
+        
+        .link-preview:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.1);
+        }
+        
+        .video-embed iframe {
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+        
+        audio {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
         .transition-all {
             transition: all 0.5s ease;
         }
@@ -127,6 +159,19 @@
             #splash-text {
                 font-size: 2rem;
                 padding: 0 20px;
+            }
+            
+            .link-preview .flex {
+                flex-direction: column;
+                space-x: 0;
+            }
+            
+            .link-preview .flex-shrink-0 {
+                margin-bottom: 1rem;
+            }
+            
+            .video-embed {
+                margin-bottom: 1.5rem;
             }
         }
     </style>
@@ -351,8 +396,58 @@
                                     <li>• <code class="text-green-400">question</code>: Main question/title</li>
                                     <li>• <code class="text-green-400">answer</code>: Content text (HTML allowed)</li>
                                     <li>• <code class="text-green-400">followUps</code>: Array of next questions</li>
+                                    <li>• <code class="text-green-400">media</code>: Array of media items (optional)</li>
                                 </ul>
                             </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h4 class="text-blue-400 font-semibold mb-2">Media Types Supported:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+                                <div>
+                                    <h5 class="text-white font-medium mb-2">Videos:</h5>
+                                    <ul class="space-y-1 text-xs">
+                                        <li>• YouTube embeds</li>
+                                        <li>• Vimeo embeds</li>
+                                        <li>• Direct MP4 files</li>
+                                        <li>• Auto-play support</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="text-white font-medium mb-2">Links:</h5>
+                                    <ul class="space-y-1 text-xs">
+                                        <li>• Rich link previews</li>
+                                        <li>• Custom titles & descriptions</li>
+                                        <li>• Preview images</li>
+                                        <li>• Favicons support</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="text-white font-medium mb-2">Images:</h5>
+                                    <ul class="space-y-1 text-xs">
+                                        <li>• Full-size modal view</li>
+                                        <li>• Lazy loading</li>
+                                        <li>• Responsive sizing</li>
+                                        <li>• Captions support</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="text-white font-medium mb-2">Audio:</h5>
+                                    <ul class="space-y-1 text-xs">
+                                        <li>• MP3, WAV, OGG support</li>
+                                        <li>• Custom controls</li>
+                                        <li>• Auto-play options</li>
+                                        <li>• Titles & descriptions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-3 bg-yellow-900 bg-opacity-30 rounded border-l-4 border-yellow-400">
+                            <p class="text-yellow-200 text-sm">
+                                <strong>Media Example:</strong> Add a "media" array to any node with objects containing "type", "url", "title", and "description" properties.
+                            </p>
+                        </div>
                         </div>
                         
                         <div class="mt-4 p-3 bg-blue-900 bg-opacity-30 rounded border-l-4 border-blue-400">
@@ -913,7 +1008,10 @@
             
             // Update content
             document.getElementById('question-title').textContent = node.question;
-            document.getElementById('answer-content').innerHTML = node.answer;
+            
+            // Process answer content with media support
+            const answerContainer = document.getElementById('answer-content');
+            answerContainer.innerHTML = processAnswerContent(node.answer, node.media);
             
             // Update follow-ups
             const followUpsContainer = document.getElementById('follow-ups-container');
@@ -926,6 +1024,236 @@
                 button.onclick = () => navigateToNode(followUp.nextNodeId);
                 followUpsContainer.appendChild(button);
             });
+            
+            // Initialize any embedded content
+            setTimeout(() => {
+                initializeEmbeddedContent();
+            }, 100);
+        }
+
+        function processAnswerContent(answer, media) {
+            let processedContent = answer;
+            
+            // If media exists, add it to the content
+            if (media && Array.isArray(media)) {
+                let mediaHTML = '';
+                
+                media.forEach((item, index) => {
+                    switch (item.type) {
+                        case 'video':
+                            mediaHTML += createVideoEmbed(item);
+                            break;
+                        case 'link':
+                            mediaHTML += createLinkPreview(item);
+                            break;
+                        case 'image':
+                            mediaHTML += createImageEmbed(item);
+                            break;
+                        case 'audio':
+                            mediaHTML += createAudioEmbed(item);
+                            break;
+                    }
+                });
+                
+                // Add media after the text content
+                processedContent += '<div class="media-container mt-8">' + mediaHTML + '</div>';
+            }
+            
+            return processedContent;
+        }
+
+        function createVideoEmbed(videoItem) {
+            const { url, title = 'Video', description = '', autoplay = false, width = '100%', height = '315' } = videoItem;
+            
+            // Handle different video platforms
+            let embedHTML = '';
+            
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                const videoId = extractYouTubeID(url);
+                const autoplayParam = autoplay ? '&autoplay=1' : '';
+                embedHTML = `
+                    <div class="video-embed mb-6">
+                        <div class="relative w-full" style="padding-bottom: 56.25%; height: 0;">
+                            <iframe 
+                                class="absolute top-0 left-0 w-full h-full rounded-lg"
+                                src="https://www.youtube.com/embed/${videoId}?rel=0${autoplayParam}"
+                                title="${title}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        ${title ? `<h4 class="text-white font-semibold mt-3">${title}</h4>` : ''}
+                        ${description ? `<p class="text-gray-300 text-sm mt-2">${description}</p>` : ''}
+                    </div>
+                `;
+            } else if (url.includes('vimeo.com')) {
+                const videoId = extractVimeoID(url);
+                const autoplayParam = autoplay ? '&autoplay=1' : '';
+                embedHTML = `
+                    <div class="video-embed mb-6">
+                        <div class="relative w-full" style="padding-bottom: 56.25%; height: 0;">
+                            <iframe 
+                                class="absolute top-0 left-0 w-full h-full rounded-lg"
+                                src="https://player.vimeo.com/video/${videoId}?color=60a5fa${autoplayParam}"
+                                title="${title}"
+                                frameborder="0"
+                                allow="autoplay; fullscreen; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        ${title ? `<h4 class="text-white font-semibold mt-3">${title}</h4>` : ''}
+                        ${description ? `<p class="text-gray-300 text-sm mt-2">${description}</p>` : ''}
+                    </div>
+                `;
+            } else {
+                // Generic video embed
+                embedHTML = `
+                    <div class="video-embed mb-6">
+                        <video 
+                            class="w-full rounded-lg"
+                            width="${width}" 
+                            height="${height}"
+                            controls
+                            ${autoplay ? 'autoplay' : ''}
+                            preload="metadata">
+                            <source src="${url}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        ${title ? `<h4 class="text-white font-semibold mt-3">${title}</h4>` : ''}
+                        ${description ? `<p class="text-gray-300 text-sm mt-2">${description}</p>` : ''}
+                    </div>
+                `;
+            }
+            
+            return embedHTML;
+        }
+
+        function createLinkPreview(linkItem) {
+            const { url, title, description, image, favicon, domain } = linkItem;
+            
+            return `
+                <div class="link-preview mb-6 bg-gray-800 bg-opacity-50 rounded-lg p-4 border border-gray-600 hover:border-blue-400 transition-colors duration-300">
+                    <a href="${url}" target="_blank" rel="noopener noreferrer" class="block">
+                        <div class="flex items-start space-x-4">
+                            ${image ? `
+                                <div class="flex-shrink-0">
+                                    <img src="${image}" alt="${title || 'Link preview'}" class="w-20 h-20 object-cover rounded-lg">
+                                </div>
+                            ` : ''}
+                            <div class="flex-grow min-w-0">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    ${favicon ? `<img src="${favicon}" alt="" class="w-4 h-4">` : ''}
+                                    <span class="text-blue-400 text-sm font-medium">${domain || new URL(url).hostname}</span>
+                                </div>
+                                <h4 class="text-white font-semibold line-clamp-2 hover:text-blue-300 transition-colors duration-200">
+                                    ${title || url}
+                                </h4>
+                                ${description ? `
+                                    <p class="text-gray-300 text-sm mt-2 line-clamp-3">${description}</p>
+                                ` : ''}
+                                <div class="flex items-center mt-3">
+                                    <svg class="w-4 h-4 text-blue-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                    </svg>
+                                    <span class="text-blue-400 text-sm">Open Link</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `;
+        }
+
+        function createImageEmbed(imageItem) {
+            const { url, title, description, width = '100%', height = 'auto' } = imageItem;
+            
+            return `
+                <div class="image-embed mb-6">
+                    <div class="relative group">
+                        <img 
+                            src="${url}" 
+                            alt="${title || 'Image'}"
+                            class="w-full rounded-lg shadow-lg cursor-pointer transition-transform duration-300 group-hover:scale-105"
+                            style="max-width: ${width}; height: ${height};"
+                            onclick="openImageModal('${url}', '${title || 'Image'}')"
+                            loading="lazy"
+                        >
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 rounded-lg flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    ${title ? `<h4 class="text-white font-semibold mt-3">${title}</h4>` : ''}
+                    ${description ? `<p class="text-gray-300 text-sm mt-2">${description}</p>` : ''}
+                </div>
+            `;
+        }
+
+        function createAudioEmbed(audioItem) {
+            const { url, title, description, autoplay = false } = audioItem;
+            
+            return `
+                <div class="audio-embed mb-6 bg-gray-800 bg-opacity-50 rounded-lg p-4">
+                    <audio 
+                        class="w-full"
+                        controls
+                        ${autoplay ? 'autoplay' : ''}
+                        preload="metadata">
+                        <source src="${url}" type="audio/mpeg">
+                        <source src="${url}" type="audio/wav">
+                        <source src="${url}" type="audio/ogg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    ${title ? `<h4 class="text-white font-semibold mt-3">${title}</h4>` : ''}
+                    ${description ? `<p class="text-gray-300 text-sm mt-2">${description}</p>` : ''}
+                </div>
+            `;
+        }
+
+        // Helper functions
+        function extractYouTubeID(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        function extractVimeoID(url) {
+            const regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/)|(staff\/picks\/)|(video\/))?([0-9]+)/;
+            const match = url.match(regExp);
+            return match ? match[7] : null;
+        }
+
+        function initializeEmbeddedContent() {
+            // Initialize any special embedded content that needs JavaScript
+            // This could include lazy loading, analytics, etc.
+        }
+
+        function openImageModal(imageUrl, title) {
+            // Create and show image modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90';
+            modal.innerHTML = `
+                <div class="relative max-w-4xl max-h-full p-4">
+                    <button onclick="this.parentElement.parentElement.remove()" 
+                            class="absolute -top-2 -right-2 w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                    <img src="${imageUrl}" alt="${title}" class="max-w-full max-h-full rounded-lg">
+                    ${title !== 'Image' ? `<p class="text-center text-white mt-4 text-lg">${title}</p>` : ''}
+                </div>
+            `;
+            
+            modal.onclick = function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            };
+            
+            document.body.appendChild(modal);
         }
 
         function navigateToNode(nodeId) {
@@ -1088,8 +1416,53 @@
                 }
             };
             
-            // Use loaded data if available, otherwise use default
-            const dataToShow = contentData || defaultData;
+            // Add example with media to show the new capabilities
+            const exampleWithMedia = {
+                "startNode": "node1",
+                "nodes": {
+                    "node1": {
+                        "question": "What is Consciousness?",
+                        "answer": "Consciousness is the fundamental awareness that underlies all existence...",
+                        "media": [
+                            {
+                                "type": "video",
+                                "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                                "title": "Understanding Consciousness",
+                                "description": "A deep dive into the nature of awareness"
+                            },
+                            {
+                                "type": "link",
+                                "url": "https://example.com/consciousness-article",
+                                "title": "Scientific Studies on Consciousness",
+                                "description": "Latest research and findings in consciousness studies",
+                                "image": "https://example.com/preview.jpg",
+                                "domain": "example.com"
+                            },
+                            {
+                                "type": "image",
+                                "url": "https://example.com/brain-image.jpg",
+                                "title": "The Conscious Brain",
+                                "description": "Neural pathways of awareness"
+                            },
+                            {
+                                "type": "audio",
+                                "url": "https://example.com/meditation.mp3",
+                                "title": "Guided Consciousness Meditation",
+                                "description": "10-minute awareness practice"
+                            }
+                        ],
+                        "followUps": [
+                            {
+                                "prompt": "If everything is Consciousness, then what is God?",
+                                "nextNodeId": "node2"
+                            }
+                        ]
+                    }
+                }
+            };
+            
+            // Use loaded data if available, otherwise use default with media example
+            const dataToShow = contentData || exampleWithMedia;
             document.getElementById('json-editor').value = JSON.stringify(dataToShow, null, 2);
             updateStats();
             showStatusMessage('Data loaded into editor!', 'success');
