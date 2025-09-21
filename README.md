@@ -1,5 +1,7 @@
 # [What is God](https://awes0m.github.io/god/)
 
+<img src="app_sc.jpg" alt="App _screenshot" width="1000" height="600">
+
 Live at -[https://awes0m.github.io/god/](https://awes0m.github.io/god/ "https://awes0m.github.io/god/")
 
 ### 📁 **External JSON File System**
