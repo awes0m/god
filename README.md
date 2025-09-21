@@ -1,4 +1,6 @@
-# god
+# [What is God](https://awes0m.github.io/god/)
+
+Live at -[https://awes0m.github.io/god/](https://awes0m.github.io/god/ "https://awes0m.github.io/god/")
 
 ### 📁 **External JSON File System**
 
@@ -123,8 +125,6 @@ json
 3. **Universe** : 3D animation begins with loaded content
 4. **Journey** : Interactive Q&A using external data
 5. **Management** : Config page for JSON editing
-
-
 
 ## 🎬 **Rich Media Support**
 
